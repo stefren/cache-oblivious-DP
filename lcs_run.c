@@ -4,7 +4,6 @@
 #include <getopt.h>
 #include "./fasttime.h"
 #include "./lcs.h"
-#include "./lcs_implementation.c"
 
 /*********************
  * Function prototypes
@@ -80,14 +79,24 @@ static lcs_input_t* read_input(char* filename) {
   printf("y length: %d\n", input->y_len);
   char* x_str = (char*) malloc(input->x_len * sizeof(char));
   char* y_str = (char*) malloc(input->y_len * sizeof(char));
-  if (fgets(x_str, input->x_len, input_file) == NULL) {
+  if (fscanf(input_file, "%s", x_str) == EOF) {
     print_error("ERROR: Could not read x in read_input");
   }
-  if (fgets(y_str, input->y_len, input_file) == NULL) {
+  if (fscanf(input_file, "%s", y_str) == EOF) {
     print_error("ERROR: Could not read y in read_input");
   }
   input->x = x_str;
   input->y = y_str;
+  printf("x:");
+  for (int i = 0; i < input->x_len; i++) {
+    printf("%c", input->x[i]);
+  }
+  printf("\n");
+  printf("y:");
+  for (int j = 0; j < input->y_len; j++) {
+    printf("%c", input->y[j]);
+  }
+  printf("\n");
   fclose(input_file);
 
   return input;

@@ -1,54 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "./lcs.h"
 
-char* dp_matrix = NULL;
-char* x, y = NULL;
-int x_len, y_len;
-void backtrack(int i, int j);
+void backtrack(lcs_input_t* input, char* dp, int i, int j);
 
 void lcs_regular(lcs_input_t* input) {
-  x_len = input->x_len;
-  y_len = input->y_len;
-  *x = input->x;
-  *y = input->y;
-  dp_matrix = (char *) calloc(x_len * y_len * sizeof(char));
-
+  int width = input->x_len;
+  int height = input->y_len;
+  char* x = input->x;
+  char* y = input->y;
+  char* dp = (char *) calloc(1, width * height);
   int i, j;
-  for (i = 0; i <= x_len; i++) {
-    dp_matrix[i][0] = 0;
-  }
-  for (j = 0; j <= y_len; j++) {
-    dp_matrix[0][j] = 0;
-  }
-  for (i = 1; i <= x_len; i++) {
-    for (j = 1; j <= y_len; j++) {
-      if (x[i] == y[j]) {
-        dp_matrix[i][j] = dp_matrix[i-1][j-1] + 1;
+  for (i = 0; i < width; i++) {
+    for (j = 0; j < height; j++) {
+      if (i == 0 || j == 0) {
+        set_char_at_indices(dp, width, i, j, (x[i] == y[j]));
+      } else if (x[i] == y[j]) {
+        set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j-1) + 1);
+      } else if (get_char_at_indices(dp, width, i, j-1) > get_char_at_indices(dp, width+1, i-1, j)) {
+        set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i, j-1));
       } else {
-        if (dp_matrix[i][j-1] > dp_matrix[i-1][j]) {
-          dp_matrix[i][j] = dp_matrix[i][j-1];
-        } else {
-          dp_matrix[i][j] = dp_matrix[i-1][j];
-        }
+        set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j));
       }
     }
   }
-  backtrack(x_len, y_len);
+
+  printf("Longest subsequence: %d\n", get_char_at_indices(dp, width, width-1, height-1));
+  backtrack(input, dp, width-1, height-1);
+  printf("\n");
 }
 
-void backtrack(int i, int j) {
-  if (i == 0 || j == 0) {
-    printf("Longest subsequence: \n");
+void backtrack(lcs_input_t* input, char* dp, int i, int j) {
+  if (i < 0 || j < 0) {
     return;
   }
-  if (x[i] == y[i]) {
-    backtrack(input, dp_matrix, i, j-1);
-    printf("%d", x[i]);
-  }
-  if (dp_matrix[i][j-1] > dp_matrix[i-1][j]) {
-    backtrack(input, dp_matrix, i-1, j);
+  if (input->x[i] == input->y[j]) {
+    backtrack(input, dp, i-1, j-1);
+    putchar(input->x[i]);
+  } else if (get_char_at_indices(dp, input->x_len, i, j-1) > get_char_at_indices(dp, input->x_len, i-1, j)) {
+    backtrack(input, dp, i, j-1);
   } else {
-    backtrack(input, dp_matrix, i, j-1);
+    backtrack(input, dp, i-1, j);
   }
 }
