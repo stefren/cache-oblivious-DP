@@ -18,7 +18,7 @@ void lcs_regular(lcs_input_t* input) {
         set_char_at_indices(dp, width, i, j, (x[i] == y[j]));
       } else if (x[i] == y[j]) {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j-1) + 1);
-      } else if (get_char_at_indices(dp, width, i, j-1) > get_char_at_indices(dp, width+1, i-1, j)) {
+      } else if (get_char_at_indices(dp, width, i, j-1) > get_char_at_indices(dp, width, i-1, j)) {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i, j-1));
       } else {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j));
