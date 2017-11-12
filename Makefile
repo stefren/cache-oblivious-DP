@@ -11,7 +11,7 @@ endif
 all: lcs_run
 
 lcs_run: lcs_run.c
-	$(CC) $(CFLAGS) lcs_run.c lcs_implementation.c -o lcs
+	$(CC) $(CFLAGS) lcs_run.c lcs_implementation.c lcs_cache_oblivious.c -o lcs
 
 clean:
 	$(RM) lcs_run *.o .buildmode

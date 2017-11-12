@@ -47,6 +47,9 @@ int main(int argc, char** argv) {
   fasttime_t start = gettime();
   lcs_regular(input);
   fasttime_t end = gettime();
+  start = gettime();
+  lcs_cache_oblivious(input);
+  end = gettime();
   free_input(input);
 }
 
