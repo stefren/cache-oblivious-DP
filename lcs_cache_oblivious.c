@@ -30,14 +30,15 @@ lcs_result_t lcs_recursive(boundary_t X, boundary_t Y, boundary_t T, boundary_t 
     return result;
   } else {
     boundary_t new_X = (boundary_t) {.start = X.start, .length = X.length/2 };
-    return result; 
+    return result;
   }
 }
 
 void lcs_output_boundary(lcs_input_t* input, char* dp, int width, int x_index, int y_index, int x_len, int y_len) {
-  if (x_len == 1 && y_len == 1) {
+  printf("%d, %d, %d, %d\n", x_index, y_index, x_len, y_len);
+  if (x_len <= 1 && y_len <= 1) {
     if (input->x[x_index] == input->y[y_index]) {
-      set_char_at_indices(dp, width, x_index, y_index, get_char_at_indices(dp, width, x_index-1, y_index-1)); 
+      set_char_at_indices(dp, width, x_index, y_index, get_char_at_indices(dp, width, x_index-1, y_index-1));
     } else if (get_char_at_indices(dp, width, x_index, y_index-1) > get_char_at_indices(dp, width, x_index-1, y_index)) {
       set_char_at_indices(dp, width, x_index, y_index, get_char_at_indices(dp, width, x_index, y_index-1));
     } else {
