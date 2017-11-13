@@ -67,7 +67,11 @@ void lcs_output_boundary(lcs_input_t* input, char* dp, int width, int x_index, i
   if (x_len == 0 || y_len == 0) return;
   if (x_len == 1 && y_len == 1) {
     if (input->x[x_index] == input->y[y_index]) {
-      set_char_at_indices(dp, width, x_index, y_index, get_char_at_indices(dp, width, x_index-1, y_index-1));
+      int value = 0;
+      if (x_index != 0 && y_index != 0) {
+        value = get_char_at_indices(dp, width, x_index-1, y_index-1);
+      }
+      set_char_at_indices(dp, width, x_index, y_index, value);
     } else if (get_char_at_indices(dp, width, x_index, y_index-1) > get_char_at_indices(dp, width, x_index-1, y_index)) {
       set_char_at_indices(dp, width, x_index, y_index, get_char_at_indices(dp, width, x_index, y_index-1));
     } else {
