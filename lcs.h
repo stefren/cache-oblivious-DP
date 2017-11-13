@@ -41,3 +41,4 @@ static inline char set_char_at_indices(char* dp_matrix, int row_size, int i, int
   dp_matrix[j*row_size + i] = value;
   return 0;   // success
 }
+
