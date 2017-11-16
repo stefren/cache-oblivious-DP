@@ -80,8 +80,8 @@ static lcs_input_t* read_input(char* filename) {
   fscanf(input_file, "%d", &(input->y_len));
   printf("x length: %d\n", input->x_len);
   printf("y length: %d\n", input->y_len);
-  char* x_str = (char*) malloc(input->x_len * sizeof(char));
-  char* y_str = (char*) malloc(input->y_len * sizeof(char));
+  char* x_str = (char*) malloc(input->x_len);
+  char* y_str = (char*) malloc(input->y_len);
   if (fscanf(input_file, "%s", x_str) == EOF) {
     print_error("ERROR: Could not read x in read_input");
   }
@@ -101,7 +101,6 @@ static lcs_input_t* read_input(char* filename) {
   }
   printf("\n");
   fclose(input_file);
-
   return input;
 }
 

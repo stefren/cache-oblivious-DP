@@ -31,6 +31,9 @@ void lcs_cache_oblivious(lcs_input_t* input);
  * block of memory in row-major order.
  */
 static inline char get_char_at_indices(char* dp_matrix, int row_size, int i, int j) {
+  if (j < 0 || i < 0 || i > row_size) {
+    return 0;
+  }
   return dp_matrix[j*row_size + i];
 }
 
