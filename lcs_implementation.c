@@ -14,11 +14,9 @@ void lcs_regular(lcs_input_t* input) {
   int i, j;
   for (i = 0; i < width; i++) {
     for (j = 0; j < height; j++) {
-      if (i == 0 || j == 0) {
-        set_char_at_indices(dp, width, i, j, (x[i] == y[j]));
-      } else if (x[i] == y[j]) {
+      if (x[i] == y[j]) {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j-1) + 1);
-      } else if (get_char_at_indices(dp, width, i, j-1) > get_char_at_indices(dp, width, i-1, j)) {
+      } else if (get_char_at_indices(dp, width, i, j-1) >= get_char_at_indices(dp, width, i-1, j)) {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i, j-1));
       } else {
         set_char_at_indices(dp, width, i, j, get_char_at_indices(dp, width, i-1, j));
@@ -27,6 +25,12 @@ void lcs_regular(lcs_input_t* input) {
   }
 
   printf("Longest subsequence: %d\n", get_char_at_indices(dp, width, width-1, height-1));
+  for (i = 0; i < width; i++) {
+    for (j = 0; j < height; j++) {
+      printf("%d ", get_char_at_indices(dp, width, i, j));
+    }
+    printf("\n");
+  }
   backtrack(input, dp, width-1, height-1);
   printf("\n");
 }
