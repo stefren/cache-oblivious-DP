@@ -3,15 +3,15 @@
 #include <string.h>
 #include "./lcs.h"
 
-void backtrack(lcs_input_t* input, char* dp, int i, int j);
+void backtrack(lcs_input_t* input, uint64_t* dp, int64_t i, int64_t j);
 
 void lcs_regular(lcs_input_t* input) {
-  int width = input->x_len;
-  int height = input->y_len;
+  uint64_t width = input->x_len;
+  uint64_t height = input->y_len;
   char* x = input->x;
   char* y = input->y;
-  char* dp = (char *) calloc(1, width * height);
-  int i, j;
+  uint64_t* dp = calloc(sizeof(uint64_t), width * height);
+  uint64_t i, j;
   for (i = 0; i < width; i++) {
     for (j = 0; j < height; j++) {
       if (x[i] == y[j]) {
@@ -24,18 +24,12 @@ void lcs_regular(lcs_input_t* input) {
     }
   }
 
-  printf("Longest subsequence: %d\n", get_char_at_indices(dp, width, width-1, height-1));
-  for (i = 0; i < width; i++) {
-    for (j = 0; j < height; j++) {
-      printf("%d ", get_char_at_indices(dp, width, i, j));
-    }
-    printf("\n");
-  }
+  printf("Longest subsequence: %llu\n", get_char_at_indices(dp, width, width-1, height-1));
   backtrack(input, dp, width-1, height-1);
   printf("\n");
 }
 
-void backtrack(lcs_input_t* input, char* dp, int i, int j) {
+void backtrack(lcs_input_t* input, uint64_t* dp, int64_t i, int64_t j) {
   if (i < 0 || j < 0) {
     return;
   }

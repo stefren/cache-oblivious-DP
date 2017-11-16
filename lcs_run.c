@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
   while ((c = getopt(argc, argv, "f:")) != EOF) {
     switch (c) {
     case 'f':
-      input_file = (char*) malloc(sizeof(char));
+      input_file = (char*) malloc(MAXLINE);
       if (input_file == NULL) {
         print_error("ERROR: malloc failed in main");
       }
@@ -47,9 +47,11 @@ int main(int argc, char** argv) {
   fasttime_t start = gettime();
   lcs_regular(input);
   fasttime_t end = gettime();
+  printf("Regular impl.: %f\n", tdiff(start, end));
   start = gettime();
   lcs_cache_oblivious(input);
   end = gettime();
+  printf("C-O impl.: %f\n", tdiff(start, end));
   free_input(input);
 }
 
@@ -76,12 +78,12 @@ static lcs_input_t* read_input(char* filename) {
     print_error("ERROR: Could not open file in read_input");
   }
 
-  fscanf(input_file, "%d", &(input->x_len));
-  fscanf(input_file, "%d", &(input->y_len));
-  printf("x length: %d\n", input->x_len);
-  printf("y length: %d\n", input->y_len);
-  char* x_str = (char*) malloc(input->x_len);
-  char* y_str = (char*) malloc(input->y_len);
+  fscanf(input_file, "%lld", &(input->x_len));
+  fscanf(input_file, "%lld", &(input->y_len));
+  printf("x length: %lld\n", input->x_len);
+  printf("y length: %lld\n", input->y_len);
+  char* x_str = (char*) malloc(input->x_len + 2);
+  char* y_str = (char*) malloc(input->y_len + 2);
   if (fscanf(input_file, "%s", x_str) == EOF) {
     print_error("ERROR: Could not read x in read_input");
   }
