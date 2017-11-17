@@ -54,3 +54,30 @@ static uint64_t set_char_at_indices(uint64_t* dp_matrix, int row_size, int i, in
   dp_matrix[j*row_size + i] = value;
   return 0;   // success
 }
+
+/* Free the LCS result */
+static void free_lcs_result(lcs_result_t* result) {
+  lcs_result_node_t* node = result->head;
+  while (node != NULL) {
+    lcs_result_node_t* nextNode = node->next;
+    free(node);
+    node = nextNode;
+  }
+}
+
+/* Puts the data into the second result and frees the first result
+ */
+static void merge_lcs_result(lcs_result_t* first, lcs_result_t* second) {
+  if (second->head == NULL) {
+    second->head = first->head;
+    second->tail = first->tail;
+    second->size = first->size;
+    return;
+  }
+  if (first->size == 0) {
+    return;
+  }
+  first->tail->next = second->head;
+  second->head = first->head;
+  second->size += first->size;
+}
