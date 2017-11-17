@@ -53,6 +53,7 @@ int main(int argc, char** argv) {
   end = gettime();
   printf("C-O impl.: %f\n", tdiff(start, end));
   free_input(input);
+  free(input_file);
 }
 
 /******************

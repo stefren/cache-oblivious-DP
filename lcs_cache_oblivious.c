@@ -55,6 +55,7 @@ void lcs_cache_oblivious(lcs_input_t* input) {
   }
   printf("\n");
   free(dp);
+  free_lcs_result(&result);
 }
 
 lcs_result_t lcs_recursive(lcs_input_t* input, uint64_t* dp, int64_t width, int64_t x_index, int64_t y_index, int64_t* i, int64_t* j, int64_t x_len, int64_t y_len) {
