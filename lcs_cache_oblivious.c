@@ -21,13 +21,18 @@ void free_lcs_result(lcs_result_t* result) {
 /* Puts the data into the second result and frees the first result
  */
 void merge_lcs_result(lcs_result_t* first, lcs_result_t* second) {
+  if (second->head == NULL) {
+    second->head = first->head;
+    second->tail = first->tail;
+    second->size = first->size;
+    return;
+  }
   if (first->size == 0) {
     return;
   }
   first->tail->next = second->head;
   second->head = first->head;
   second->size += first->size;
-  free_lcs_result(first);
 }
 
 void lcs_output_boundary(lcs_input_t* input, uint64_t* dp, int64_t width, int64_t x_index, int64_t y_index, int64_t x_len, int64_t y_len);
@@ -45,11 +50,8 @@ void lcs_cache_oblivious(lcs_input_t* input) {
   lcs_result_t result = lcs_recursive(input, dp, width, 0, 0, &i, &j, width, height);
   printf("Longest subsequence: %llu\n", result.size);
   lcs_result_node_t* node = result.head;
-  i = 0;
-  while (node != NULL) {
+  for (lcs_result_node_t* node = result.head; node != NULL; node = node->next) {
     printf("%c", node->character);
-    i++;
-    node = node->next;
   }
   printf("\n");
   free(dp);
@@ -63,6 +65,7 @@ lcs_result_t lcs_recursive(lcs_input_t* input, uint64_t* dp, int64_t width, int6
     if (input->x[*i] == input->y[*j]) {
       lcs_result_node_t* newNode = malloc(sizeof(lcs_result_node_t));
       newNode->character = input->x[*i];
+      newNode->next = NULL;
       result.head = newNode;
       result.tail = newNode;
       result.size = 1;
