@@ -33,7 +33,7 @@ void lcs_regular(lcs_input_t* input) {
   }
   printf("\n");
   free(dp);
-  free_lcs_result(result);
+  free_lcs_result(&result);
 }
 
 void backtrack(lcs_input_t* input, lcs_result_t* result, uint64_t* dp, int64_t i, int64_t j) {
@@ -51,6 +51,7 @@ void backtrack(lcs_input_t* input, lcs_result_t* result, uint64_t* dp, int64_t i
       result->size = 1;
     } else {
       result->tail->next = new_node;
+      result->tail = new_node;
       result->size++;
     }
   } else if (get_char_at_indices(dp, input->x_len, i, j-1) > get_char_at_indices(dp, input->x_len, i-1, j)) {

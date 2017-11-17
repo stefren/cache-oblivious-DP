@@ -8,32 +8,6 @@
 #define START_CAPACITY 64
 #endif
 
-/* Free the LCS result */
-void free_lcs_result(lcs_result_t* result) {
-  lcs_result_node_t* node = result->head;
-  while (node != NULL) {
-    lcs_result_node_t* nextNode = node->next;
-    free(node);
-    node = nextNode;
-  }
-}
-
-/* Puts the data into the second result and frees the first result
- */
-void merge_lcs_result(lcs_result_t* first, lcs_result_t* second) {
-  if (second->head == NULL) {
-    second->head = first->head;
-    second->tail = first->tail;
-    second->size = first->size;
-    return;
-  }
-  if (first->size == 0) {
-    return;
-  }
-  first->tail->next = second->head;
-  second->head = first->head;
-  second->size += first->size;
-}
 
 void lcs_output_boundary(lcs_input_t* input, uint64_t* dp, int64_t width, int64_t x_index, int64_t y_index, int64_t x_len, int64_t y_len);
 lcs_result_t lcs_recursive(lcs_input_t* input, uint64_t* dp, int64_t width, int64_t x_index, int64_t y_index, int64_t* i, int64_t* j, int64_t x_len, int64_t y_len);
