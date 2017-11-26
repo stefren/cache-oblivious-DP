@@ -1,7 +1,7 @@
 import random
 
 characters = ["A", "B", "C", "D", "E"]
-length = 100
+length = 1 << 15 
 f = open('gen_input', 'w')
 f.write(str(length)+"\n")
 f.write(str(length)+"\n")
