@@ -2,7 +2,7 @@
 #include <string.h>
 #include <getopt.h>
 
-#include "./gep.h"
+#include "../gep.h"
 
 static void usage(void) {
   fprintf(stderr, "Usage: floyd_warshall [-f <file>]\n");
