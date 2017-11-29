@@ -15,18 +15,16 @@ typedef uint64_t (*UPDATE_F)(uint64_t x, uint64_t u, uint64_t v, uint64_t w);
 typedef bool (*UPDATE_EXISTS_F)(uint64_t n, uint64_t i_1, uint64_t i_2, uint64_t j_1, 
                                 uint64_t j_2, uint64_t k_1, uint64_t k_2);
 
-enum array_type {DOUBLE, UINT64};
 typedef struct {
   uint64_t width;
   uint64_t height;
-  void* entries;
-  enum array_type type;
+  uint64_t* entries;
 } dp_matrix_t;
 
-dp_matrix_t* init(uint64_t length, enum array_type type);
+dp_matrix_t* init(uint64_t length);
 
 uint64_t get_entry(dp_matrix_t* X, uint64_t i, uint64_t j);
-void set_entry(dp_matrix_t* X, uint64_t i, uint64_t j, void* value);
+void set_entry(dp_matrix_t* X, uint64_t i, uint64_t j, uint64_t value);
 
 void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
                    uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
