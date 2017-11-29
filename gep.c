@@ -31,7 +31,7 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
                    uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
                    UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f) {
 //  printf("%lld %lld %lld %lld %lld %lld\n", i_1, i_2, j_1, j_2, k_1, k_2);
-  if (update_exists_f(i_1, i_2, j_1, j_2, k_1, k_2) == false || k_2 < k_1 || j_2 < j_1 || i_2 < i_1) {
+  if (update_exists_f(X->width, i_1, i_2, j_1, j_2, k_1, k_2) == false || k_2 < k_1 || j_2 < j_1 || i_2 < i_1) {
     return;
   }
   if (k_1 == k_2) { // base case

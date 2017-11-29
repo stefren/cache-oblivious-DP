@@ -10,14 +10,13 @@ static void usage(void) {
 }
 
 static uint64_t floyd_warshall_update(uint64_t x, uint64_t u, uint64_t v, uint64_t w) {
-//  printf("%lld, ", x);
-//  printf("%lld \n", u+v);
   if (u == -1 || v == -1 || x < u + v) return x;
   return u + v;
   
 }
 
-static bool floyd_warshall_update_exists(uint64_t i_1, uint64_t i_2, uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2) {
+static bool floyd_warshall_update_exists(uint64_t n, uint64_t i_1, uint64_t i_2, uint64_t j_1,
+                                         uint64_t j_2, uint64_t k_1, uint64_t k_2) {
   return true; 
 }
 
