@@ -8,10 +8,10 @@ else
         CFLAGS += -O3 -DNDEBUG
 endif
 
-all: floyd_warshall 
-
-floyd_warshall: floyd_warshall_with_gep.c
-	$(CC) $(CFLAGS) ../gep.c floyd_warshall_with_gep.c -o floyd_warshall 
+all: test 
+ 
+test: floyd_warshall_test.c
+	$(CC) $(CFLAGS) ../gep.c floyd_warshall_with_gep.c floyd_warshall_naive.c floyd_warshall_test.c -o floyd_warshall_test 
 
 clean:
-	$(RM) floyd_warshall *.o .buildmode
+	$(RM) floyd_warshall_test *.o .buildmode
