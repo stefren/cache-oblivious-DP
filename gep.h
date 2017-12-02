@@ -2,6 +2,8 @@
 #include <inttypes.h>
 #include <stdlib.h>
 
+#ifndef GEP_H
+#define GEP_H
 /* Template for the update function, which defines c[i,j] in terms of x = c[i,j],
  * u = c[i,k], v = c[k,j], and w = c[k,k]
  */
@@ -31,3 +33,5 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
                    UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
 
 uint64_t GEP(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
+
+#endif /* GEP_H */
