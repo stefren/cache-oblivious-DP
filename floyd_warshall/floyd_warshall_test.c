@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     exit(1);
   }
   char c = 0;
-  while ((c = getopt(argc, argv, "fgn:")) != EOF) {
+  while ((c = getopt(argc, argv, "f:")) != EOF) {
     switch (c) {
     case 'f':
       input_file = (char*) malloc(1024);
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
   for (i = 0; i < length; i++) {
     set_entry(X, i, i, 0);
-    set_entry(Y, i, j, 0);
+    set_entry(Y, i, i, 0);
   }
 
   for (uint64_t k = 0; k < num_edges; k++) {
@@ -78,5 +78,8 @@ int main(int argc, char** argv) {
   for (i = 0; i < length * length; i++) {
     assert(X->entries[i] == Y->entries[i]);
   }
-  printf("All correct!");
+  #ifndef NDEBUG
+    printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
+  #endif
+  
 }
