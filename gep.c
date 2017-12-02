@@ -42,9 +42,9 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
 //    printf("%lld, %lld, %lld\n", i_1, j_1, k_1);    
     set_entry(X, i_1, j_1, update_f(x, u, v, w));
   } else {
-    uint64_t i_m = (i_1 + i_2)/2;
-    uint64_t j_m = (j_1 + j_2)/2;
-    uint64_t k_m = (k_1 + k_2)/2;
+    uint64_t i_m = (i_1 + i_2 - 1)/2;
+    uint64_t j_m = (j_1 + j_2 - 1)/2;
+    uint64_t k_m = (k_1 + k_2 - 1)/2;
     
     // forward pass
     recursive_GEP(X, i_1, i_m, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
