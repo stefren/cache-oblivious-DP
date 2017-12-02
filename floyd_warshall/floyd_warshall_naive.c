@@ -5,23 +5,22 @@
 #include "../gep.h"
 
 static void usage(void) {
-  fprintf(stderr, "Usage: floyd_warshall [-f <file>]\n");
+  fprintf(stderr, "Usage: floyd_warshall_naive [-f <file>]\n");
   fprintf(stderr, "\t-f <file> Use <file> as the input file. \n");
 }
 
-static uint64_t floyd_warshall_update(uint64_t x, uint64_t u, uint64_t v, uint64_t w) {
-  if (u == -1 || v == -1 || x < u + v) return x;
-  return u + v;
-  
-}
-
-static bool floyd_warshall_update_exists(uint64_t n, uint64_t i_1, uint64_t i_2, uint64_t j_1,
-                                         uint64_t j_2, uint64_t k_1, uint64_t k_2) {
-  return true; 
-}
-
-void floyd_warshall_with_gep(dp_matrix_t* X) {
-  GEP(X, &floyd_warshall_update, &floyd_warshall_update_exists);
+/* Naive implementation of Floyd-Warshall */
+void floyd_warshall_naive(dp_matrix_t* X) {
+  for (k = 0; k < X->width; k++) {
+    for (i = 0; i < X->width; i++) {
+      for (j = 0; j < X->width; j++) {
+        if (get_entry(X, i, k) != -1 && get_entry(X, k, j) != -1 && 
+            get_entry(X, i, k) + get_entry(X, k, j) < get_entry(X, i, j)) {
+          set_entry(X, i, j, get_entry(X, i, k) + get_entry(X, k, j));
+        }
+      }
+    }
+  }
 }
 
 int main(int argc, char** argv) {
@@ -79,8 +78,7 @@ int main(int argc, char** argv) {
     set_entry(X, i, j, w);
   }
 
-  /* Call the GEP function with the templated functions defined above. */
-  GEP(X, &floyd_warshall_update, &floyd_warshall_update_exists);
+  floyd_warshall_naive(X);
   
   for (i = 0; i < length * length; i++) {
     printf("%lld, %lld: %lld\n", i/length, i%length, X->entries[i]);
