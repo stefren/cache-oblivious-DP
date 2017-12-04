@@ -4,6 +4,7 @@
 
 #ifndef GEP_H
 #define GEP_H
+
 /* Template for the update function, which defines c[i,j] in terms of x = c[i,j],
  * u = c[i,k], v = c[k,j], and w = c[k,k]
  */
@@ -27,10 +28,6 @@ dp_matrix_t* init(uint64_t width, uint64_t height);
 
 uint64_t get_entry(dp_matrix_t* X, uint64_t i, uint64_t j);
 void set_entry(dp_matrix_t* X, uint64_t i, uint64_t j, uint64_t value);
-
-void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
-                   uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
-                   UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
 
 uint64_t GEP(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
 
