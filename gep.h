@@ -23,7 +23,7 @@ typedef struct {
   uint64_t* entries;
 } dp_matrix_t;
 
-dp_matrix_t* init(uint64_t length);
+dp_matrix_t* init(uint64_t width, uint64_t height);
 
 uint64_t get_entry(dp_matrix_t* X, uint64_t i, uint64_t j);
 void set_entry(dp_matrix_t* X, uint64_t i, uint64_t j, uint64_t value);

@@ -18,11 +18,11 @@ void set_entry(dp_matrix_t* X, uint64_t i, uint64_t j, uint64_t value) {
   X->entries[j*X->width + i] = value;
 }
 
-dp_matrix_t* init(uint64_t length) {
+dp_matrix_t* init(uint64_t width, uint64_t height) {
   dp_matrix_t* X = malloc(sizeof(dp_matrix_t));
-  uint64_t* matrix = (uint64_t*) calloc(sizeof(uint64_t), length * length);
-  X->width = length;
-  X->height = length;
+  uint64_t* matrix = (uint64_t*) calloc(sizeof(uint64_t), width * height);
+  X->width = width;
+  X->height = height;
   X->entries = matrix;
   return X;
 } 
