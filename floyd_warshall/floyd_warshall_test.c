@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
   fscanf(file, "%lld", &num_edges);
   
   uint64_t length = num_vertices;
-  dp_matrix_t* X = init(length);
-  dp_matrix_t* Y = init(length);
+  dp_matrix_t* X = init(length, length);
+  dp_matrix_t* Y = init(length, length);
 
   uint64_t i, j, w;
   for (i = 0; i < length; i++) {
@@ -73,13 +73,12 @@ int main(int argc, char** argv) {
   floyd_warshall_with_gep(X);
 
   /* Run naive Floyd-Warshall on Y */
-  floyd_warshall_naive(Y);
+  floyd_warshall_naive(X);
 
+  #ifndef NDEBUG
   for (i = 0; i < length * length; i++) {
     assert(X->entries[i] == Y->entries[i]);
   }
-  #ifndef NDEBUG
-    printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
+  printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
   #endif
-  
 }
