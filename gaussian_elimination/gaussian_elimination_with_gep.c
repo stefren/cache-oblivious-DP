@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
   
   fscanf(file, "%lld", &length);
   
-  dp_matrix_t* X = init(length);
+  dp_matrix_t* X = init(length, length);
   
   uint64_t i, j, w;
   for (i = 0; i < length; i++) {
