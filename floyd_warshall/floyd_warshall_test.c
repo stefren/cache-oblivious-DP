@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
   floyd_warshall_with_gep(X);
 
   /* Run naive Floyd-Warshall on Y */
-  floyd_warshall_naive(X);
+  floyd_warshall_naive(Y);
 
   #ifndef NDEBUG
   for (i = 0; i < length * length; i++) {
