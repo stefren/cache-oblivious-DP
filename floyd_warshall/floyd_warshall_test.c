@@ -43,8 +43,8 @@ int main(int argc, char** argv) {
       uint64_t num_vertices;
       uint64_t num_edges;
 
-      fscanf(file, "%ld", &num_vertices);
-      fscanf(file, "%ld", &num_edges);
+      fscanf(file, "%lld", &num_vertices);
+      fscanf(file, "%lld", &num_edges);
 
       uint64_t length = num_vertices;
       X = init(length, length);
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
       }
 
       for (uint64_t k = 0; k < num_edges; k++) {
-        fscanf(file, "%ld%ld%ld", &i, &j, &w);
+        fscanf(file, "%lld%lld%lld", &i, &j, &w);
         set_entry(X, i, j, w);
         set_entry(Y, i, j, w);
       }
