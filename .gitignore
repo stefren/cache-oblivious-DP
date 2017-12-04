@@ -1,3 +1,4 @@
 *.o
 floyd_warshall/floyd_warshall_test
+*.dSYM
 
