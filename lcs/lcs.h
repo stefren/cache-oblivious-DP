@@ -10,20 +10,11 @@ typedef struct {
   char* y;
 } lcs_input_t;
 
-typedef struct {
-  char* start;
-  uint64_t length;
-} boundary_t; 
-
-typedef struct {
-  boundary_t* bottom;
-  boundary_t* right;
-} boundary_result_t;
-
 struct lcs_result_node_t {
   char character;
   struct lcs_result_node_t* next;
-}; 
+};
+ 
 typedef struct lcs_result_node_t lcs_result_node_t;
 
 struct lcs_result_t {
@@ -31,10 +22,11 @@ struct lcs_result_t {
   lcs_result_node_t* tail;
   uint64_t size;
 };
+
 typedef struct lcs_result_t lcs_result_t;
 
-void lcs_naive(dp_matrix_t* X);
-void lcs_cache_oblivious(dp_matrix_t* X);
+void lcs_naive(dp_matrix_t* X, lcs_input_t* input);
+void lcs_cache_oblivious(dp_matrix_t* X, lcs_input_t* input);
 
 /* Free the LCS result */
 static void free_lcs_result(lcs_result_t* result) {

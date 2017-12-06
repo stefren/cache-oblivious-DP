@@ -5,7 +5,7 @@
 
 void backtrack(lcs_input_t* input, lcs_result_t* result, uint64_t* dp, int64_t i, int64_t j);
 
-void lcs_naive(dp_matrix_t* X) {
+void lcs_naive(dp_matrix_t* X, lcs_input_t* input) {
   uint64_t width = X->width;
   uint64_t height = X->height;
   uint64_t i, j;

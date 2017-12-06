@@ -46,30 +46,30 @@ int main(int argc, char** argv) {
   lcs_input_t* input = read_input(input_file);
   // run implementations here
   dp_matrix_t* X = init(input->x_len, input->y_len);
-//  dp_matrix_t* Y = init(input->x_len, input->y_len);
+  dp_matrix_t* Y = init(input->x_len, input->y_len);
   for (uint64_t j = 0; j < input->y_len; j++) {
     for (uint64_t i = 0; i < input->x_len; i++) {
       if (input->x[i] == input->y[j]) {
         set_entry(X, i, j, -1);
-//        set_entry(Y, i, j, -1);
+        set_entry(Y, i, j, -1);
       }
     }
   }
   
   
-//  fasttime_t start = gettime();
-  lcs_cache_oblivious(X);
-//  fasttime_t end = gettime();
-//  printf("C-O impl.: %f\n", tdiff(start, end));
+  fasttime_t start = gettime();
+  lcs_cache_oblivious(X, input);
+  fasttime_t end = gettime();
+  printf("C-O impl.: %f\n", tdiff(start, end));
 
-//  start = gettime();
-//  lcs_naive(X);
-//  end = gettime();
-//  printf("Regular impl.: %f\n", tdiff(start, end));
+  start = gettime();
+  lcs_naive(Y, input);
+  end = gettime();
+  printf("Regular impl.: %f\n", tdiff(start, end));
 
   #ifndef NDEBUG
   for (uint64_t k = 0; k < input->x_len * input->y_len; k++) {
-    assert(X[i] == Y[i]);
+    assert(X->entries[k] == Y->entries[k]);
   }  
   printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
   #endif
