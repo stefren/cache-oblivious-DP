@@ -6,7 +6,7 @@
 #include "../fasttime.h"
 #include "./floyd_warshall.h"
 
-#define DEFAULT_LENGTH 1 << 10
+#define DEFAULT_LENGTH 1 << 8 
 static void usage(void) {
   fprintf(stderr, "Usage: floyd_warshall [-f <file>] [-r] \n");
   fprintf(stderr, "\t-f <file> Use <file> as the input file. \n");
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
   dp_matrix_t* X;
   dp_matrix_t* Y;
-
+  uint64_t length;
   /*
    * Read and interpret the command line arguments
    */
@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
       fscanf(file, "%lld", &num_vertices);
       fscanf(file, "%lld", &num_edges);
 
-      uint64_t length = num_vertices;
+      length = num_vertices;
       X = init(length, length);
       Y = init(length, length);
 
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
       for (i = 0; i < length; i++) {
         set_entry(X, i, i, 0);
-        set_entry(Y, i, j, 0);
+        set_entry(Y, i, i, 0);
       }
 
       for (uint64_t k = 0; k < num_edges; k++) {
@@ -70,17 +70,18 @@ int main(int argc, char** argv) {
       }
       break;
     case 'r':
-      X = init(DEFAULT_LENGTH, DEFAULT_LENGTH);
-      Y = init(DEFAULT_LENGTH, DEFAULT_LENGTH);
-      for (uint64_t i = 0; i < DEFAULT_LENGTH; i++) {
-        for (uint64_t j = 0; j < DEFAULT_LENGTH; j++) {
+      length = DEFAULT_LENGTH;
+      X = init(length, length);
+      Y = init(length, length);
+      for (uint64_t i = 0; i < length; i++) {
+        for (uint64_t j = 0; j < length; j++) {
           set_entry(X, i, j, -1);
           set_entry(Y, i, j, -1);
         }
       }
-      for (uint64_t i = 0; i < DEFAULT_LENGTH * DEFAULT_LENGTH; i++) {
-        uint64_t x = rand() % DEFAULT_LENGTH;
-        uint64_t y = rand() % DEFAULT_LENGTH;
+      for (uint64_t i = 0; i < length * length; i++) {
+        uint64_t x = rand() % length;
+        uint64_t y = rand() % length;
         uint64_t rand_value = rand();
         set_entry(X, x, y, rand_value);
         set_entry(Y, x, y, rand_value);
@@ -109,7 +110,7 @@ int main(int argc, char** argv) {
   printf("Naive: %f seconds\n", elapsed);
 
   #ifndef NDEBUG
-  for (i = 0; i < length * length; i++) {
+  for (uint64_t i = 0; i < length * length; i++) {
     assert(X->entries[i] == Y->entries[i]);
   }
   printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
