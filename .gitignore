@@ -2,3 +2,5 @@
 floyd_warshall/floyd_warshall_test
 *.dSYM
 *.py
+lcs/lcs
+
