@@ -36,7 +36,6 @@ void lcs_naive(dp_matrix_t* X, lcs_input_t* input) {
      return;
    }
    if (input->x[i] == input->y[j]) {
-     printf("%c", input->x[i]);
      backtrack(X, input, result, i-1, j-1);
      lcs_result_node_t* new_node = malloc(sizeof(lcs_result_node_t));
      new_node->character = input->x[i];
