@@ -1,5 +1,6 @@
 *.o
 floyd_warshall/floyd_warshall_test
+gaussian_elimination/gaussian_elimination
 *.dSYM
 *.py
 lcs/lcs
