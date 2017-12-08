@@ -14,6 +14,7 @@ void free_input(lcs_input_t* input);
 
 void print_error(char* msg);
 static void usage(void);
+
 /**************
  * Main routine
  **************/
@@ -73,8 +74,9 @@ int main(int argc, char** argv) {
   }  
   printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");
   #endif
+
   free(X->entries);
-//  free(Y->entries);
+  free(Y->entries);
   free_input(input);
   free(input_file);
 }
