@@ -111,6 +111,7 @@ int main(int argc, char** argv) {
 
   #ifndef NDEBUG
   for (uint64_t i = 0; i < length * length; i++) {
+    printf("%llu\n", i);
     assert(X->entries[i] == Y->entries[i]);
   }
   printf("\033[0;32mTESTS PASSED\033[0m All elements the same. \n");

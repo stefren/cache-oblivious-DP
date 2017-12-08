@@ -9,8 +9,8 @@ static void usage(void) {
   fprintf(stderr, "\t-f <file> Use <file> as the input file. \n");
 }
 
-static uint64_t gaussian_elimination_update(uint64_t x, uint64_t u, uint64_t v, uint64_t w) {
-  return x - (u * v) / w ;
+static uint64_t gaussian_elimination_update(uint64_t* x, uint64_t* u, uint64_t* v, uint64_t* w) {
+  return *x - (*u * *v) / *w ;
   
 }
 
