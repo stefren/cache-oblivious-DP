@@ -47,7 +47,7 @@ dp_matrix_t* init(uint64_t width, uint64_t height) {
            uint64_t* u = get_entry_addr(X, i, k);
            uint64_t* v = get_entry_addr(X, k, j);
            uint64_t* w = get_entry_addr(X, k, k);
-           update_f(x, u, v, w);
+           set_entry(X, i, j, update_f(x, u, v, w));
          }
        }
      }
