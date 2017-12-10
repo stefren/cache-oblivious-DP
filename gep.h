@@ -30,6 +30,6 @@ typedef uint64_t (*UPDATE_F)(uint64_t* x, uint64_t* u, uint64_t* v, uint64_t* w)
 typedef bool (*UPDATE_EXISTS_F)(uint64_t n, uint64_t i_1, uint64_t i_2, uint64_t j_1, 
                                 uint64_t j_2, uint64_t k_1, uint64_t k_2);
 
-uint64_t GEP(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
+uint64_t gep_update(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f);
 
 #endif /* GEP_H */

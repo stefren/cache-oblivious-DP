@@ -54,7 +54,7 @@ dp_matrix_t* init(uint64_t width, uint64_t height) {
    }
  }
 
-void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
+void recursive_gep(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
                    uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
                    UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f) {
 //  printf("%lld %lld %lld %lld %lld %lld\n", i_1, i_2, j_1, j_2, k_1, k_2);
@@ -69,20 +69,20 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
     uint64_t k_m = (k_1 + k_2)/2;
     
     // forward pass
-    recursive_GEP(X, i_1, i_m, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
-    recursive_GEP(X, i_m + 1, i_2, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
-    recursive_GEP(X, i_1, i_m, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
-    recursive_GEP(X, i_m + 1, i_2, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
+    recursive_gep(X, i_1, i_m, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
+    recursive_gep(X, i_m + 1, i_2, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
+    recursive_gep(X, i_1, i_m, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
+    recursive_gep(X, i_m + 1, i_2, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
 
     // backward pass
-    recursive_GEP(X, i_m + 1, i_2, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
-    recursive_GEP(X, i_1, i_m, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
-    recursive_GEP(X, i_m + 1, i_2, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
-    recursive_GEP(X, i_1, i_m, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
+    recursive_gep(X, i_m + 1, i_2, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
+    recursive_gep(X, i_1, i_m, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
+    recursive_gep(X, i_m + 1, i_2, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
+    recursive_gep(X, i_1, i_m, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
   }
 }
 
-// void recursive_parallel_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
+// void recursive_parallel_gep(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
 //                    uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
 //                    UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f) {
 // //  printf("%lld %lld %lld %lld %lld %lld\n", i_1, i_2, j_1, j_2, k_1, k_2);
@@ -101,26 +101,26 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
 //     uint64_t k_m = (k_1 + k_2)/2;
 //     
 //     // forward pass
-//     recursive_GEP(X, i_1, i_m, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
+//     recursive_gep(X, i_1, i_m, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
 //     #pragma omp parallel
 //     {
-//     recursive_GEP(X, i_m + 1, i_2, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
-//     recursive_GEP(X, i_1, i_m, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
+//     recursive_gep(X, i_m + 1, i_2, j_1, j_m, k_1, k_m, update_f, update_exists_f);  
+//     recursive_gep(X, i_1, i_m, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
 //     }
-//     recursive_GEP(X, i_m + 1, i_2, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
+//     recursive_gep(X, i_m + 1, i_2, j_m + 1, j_2, k_1, k_m, update_f, update_exists_f);  
 // 
 //     // backward pass
-//     recursive_GEP(X, i_m + 1, i_2, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
+//     recursive_gep(X, i_m + 1, i_2, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
 //     #pragma omp parallel
 //     {
-//     recursive_GEP(X, i_1, i_m, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
-//     recursive_GEP(X, i_m + 1, i_2, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
+//     recursive_gep(X, i_1, i_m, j_m + 1, j_2, k_m + 1, k_2, update_f, update_exists_f);  
+//     recursive_gep(X, i_m + 1, i_2, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
 //     }
-//     recursive_GEP(X, i_1, i_m, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
+//     recursive_gep(X, i_1, i_m, j_1, j_m, k_m + 1, k_2, update_f, update_exists_f);  
 //   }
 // }
 // 
-// void recursive_split_longest_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
+// void recursive_split_longest_gep(dp_matrix_t* X, uint64_t i_1, uint64_t i_2, 
 //                    uint64_t j_1, uint64_t j_2, uint64_t k_1, uint64_t k_2,
 //                    UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f, bool reverse) {
 // //  printf("%lld %lld %lld %lld %lld %lld\n", i_1, i_2, j_1, j_2, k_1, k_2);
@@ -141,41 +141,38 @@ void recursive_GEP(dp_matrix_t* X, uint64_t i_1, uint64_t i_2,
 //     if (!reverse) {
 //       if (k_diff >= j_diff && k_diff >= i_diff) {
 //         uint64_t k_m = (k_1 + k_2)/2;
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_2, k_1, k_m, update_f, update_exists_f, false);  
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_2, k_m + 1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_2, k_1, k_m, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_2, k_m + 1, k_2, update_f, update_exists_f, true);  
 //       } else if (j_diff >= i_diff && j_diff >= k_diff) {
 //         uint64_t j_m = (j_1 + j_2)/2;
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_m, k_1, k_2, update_f, update_exists_f, false);  
-//         recursive_split_longest_GEP(X, i_1, i_2, j_m + 1, j_2, k_1, k_2, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_m, k_1, k_2, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_m + 1, j_2, k_1, k_2, update_f, update_exists_f, false);  
 //       } else {
 //         uint64_t i_m = (i_1 + i_2)/2;
-//         recursive_split_longest_GEP(X, i_1, i_m, j_1, j_2, k_1, k_2, update_f, update_exists_f, false);  
-//         recursive_split_longest_GEP(X, i_m + 1, i_2, j_1, j_2, k_1, k_2, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_1, i_m, j_1, j_2, k_1, k_2, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_m + 1, i_2, j_1, j_2, k_1, k_2, update_f, update_exists_f, false);  
 //       }
 //     } else {
 //       if (k_diff >= j_diff && k_diff >= i_diff) {
 //         uint64_t k_m = (k_1 + k_2)/2;
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_2, k_1, k_m, update_f, update_exists_f, false);  
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_2, k_m + 1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_2, k_1, k_m, update_f, update_exists_f, false);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_2, k_m + 1, k_2, update_f, update_exists_f, true);  
 //       } else if (j_diff >= i_diff && j_diff >= k_diff) {
 //         uint64_t j_m = (j_1 + j_2)/2;
-//         recursive_split_longest_GEP(X, i_1, i_2, j_m + 1, j_2, k_1, k_2, update_f, update_exists_f, true);  
-//         recursive_split_longest_GEP(X, i_1, i_2, j_1, j_m, k_1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_m + 1, j_2, k_1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_1, i_2, j_1, j_m, k_1, k_2, update_f, update_exists_f, true);  
 //       } else {
 //         uint64_t i_m = (i_1 + i_2)/2;
-//         recursive_split_longest_GEP(X, i_m + 1, i_2, j_1, j_2, k_1, k_2, update_f, update_exists_f, true);  
-//         recursive_split_longest_GEP(X, i_1, i_m, j_1, j_2, k_1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_m + 1, i_2, j_1, j_2, k_1, k_2, update_f, update_exists_f, true);  
+//         recursive_split_longest_gep(X, i_1, i_m, j_1, j_2, k_1, k_2, update_f, update_exists_f, true);  
 //       }
 //     }
 //   }
 // }
  
-uint64_t GEP(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f) {
+uint64_t gep_update(dp_matrix_t* X, UPDATE_F update_f, UPDATE_EXISTS_F update_exists_f) {
   uint64_t length = X->width;
-//  recursive_split_longest_GEP(X, 0, length - 1, 0, length - 1, 0, length - 1, update_f, update_exists_f, false);
-//  recursive_parallel_GEP(X, 0, length - 1, 0, length - 1, 0, length - 1, update_f, update_exists_f);
-  recursive_GEP(X, 0, length - 1, 0, length - 1, 0, length - 1, update_f, update_exists_f);
-//  iterative(X, 0, length - 1, 0, length - 1, 0, length - 1, update_f, update_exists_f);
+  recursive_gep(X, 0, length - 1, 0, length - 1, 0, length - 1, update_f, update_exists_f);
   return get_entry(X, length - 1, length - 1);
 }
 
