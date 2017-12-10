@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
     }
   }
 
-  GEP(X, &gaussian_elimination_update, &gaussian_elimination_update_exists);
+  gep_update(X, &gaussian_elimination_update, &gaussian_elimination_update_exists);
   
   for (i = 0; i < length; i++) {
     for (j = 0; j < i; j++) {
