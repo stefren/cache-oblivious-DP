@@ -16,5 +16,5 @@ static bool floyd_warshall_update_exists(uint64_t n, uint64_t i_1, uint64_t i_2,
 }
 
 void floyd_warshall_with_gep(dp_matrix_t* X) {
-  GEP(X, &floyd_warshall_update, &floyd_warshall_update_exists);
+  gep_update(X, &floyd_warshall_update, &floyd_warshall_update_exists);
 }
