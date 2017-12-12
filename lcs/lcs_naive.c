@@ -14,7 +14,7 @@ void lcs_naive(dp_matrix_t* X, lcs_input_t* input) {
   uint64_t i, j;
   for (i = 0; i < X->width; i++) {
     for (j = 0; j < X->height; j++) {
-      if (get_entry(X, i, j) == -1) {
+      if (input->x[i] == input->y[j]) {
         set_entry(X, i, j, get_entry(X, i-1, j-1) + 1);
       } else if (get_entry(X, i, j-1) >= get_entry(X, i-1, j)) {
         set_entry(X, i, j, get_entry(X, i, j-1));
