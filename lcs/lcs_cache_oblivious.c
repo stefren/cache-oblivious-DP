@@ -4,9 +4,24 @@
 #include <assert.h>
 #include "./lcs.h"
 
-void lcs_output_boundary(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index, uint64_t y_index, uint64_t x_len, uint64_t y_len);
-lcs_result_t lcs_recursive(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index, uint64_t y_index, uint64_t* i, uint64_t* j, uint64_t x_len, uint64_t y_len);
+/* Compute the right and bottom boundaries of the rectangle with length x_len
+ * by y_len, starting at x_index, y_index.
+ * 
+ * Pre-condition: The top and left boundaries of this rectangle are already
+ * computed.
+ */
+void lcs_output_boundary(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index, 
+                         uint64_t y_index, uint64_t x_len, uint64_t y_len);
 
+/* Return a LCS output sequence between x_index...x_index + x_len of the first
+ * input and y_index...y_index + y_len of the second input.
+ */
+lcs_result_t lcs_recursive(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index,
+                           uint64_t y_index, uint64_t* i, uint64_t* j,
+                           uint64_t x_len, uint64_t y_len);
+
+/* Recursive LCS implementation.
+ */
 void lcs_cache_oblivious(dp_matrix_t* X, lcs_input_t* input) {
   uint64_t i = X->width - 1;
   uint64_t j = X->height - 1; 
@@ -20,7 +35,9 @@ void lcs_cache_oblivious(dp_matrix_t* X, lcs_input_t* input) {
   free_lcs_result(&result);
 }
 
-lcs_result_t lcs_recursive(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index, uint64_t y_index, uint64_t* i, uint64_t* j, uint64_t x_len, uint64_t y_len) {
+lcs_result_t lcs_recursive(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index,
+                           uint64_t y_index, uint64_t* i, uint64_t* j,
+                           uint64_t x_len, uint64_t y_len) {
   lcs_result_t result = (lcs_result_t) { .head = NULL, .tail = NULL, .size = 0 };
   if (x_len == 0 || y_len == 0) return result;
   if (x_len == 1 && y_len == 1) {
@@ -70,7 +87,8 @@ lcs_result_t lcs_recursive(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index,
   }
 }
 
-void lcs_output_boundary(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index, uint64_t y_index, uint64_t x_len, uint64_t y_len) {
+void lcs_output_boundary(dp_matrix_t* X, lcs_input_t* input, uint64_t x_index,
+                         uint64_t y_index, uint64_t x_len, uint64_t y_len) {
   if (x_len == 0 || y_len == 0) return;
   if (x_len == 1 && y_len == 1) {
     if (input->x[x_index] == input->y[y_index]) {

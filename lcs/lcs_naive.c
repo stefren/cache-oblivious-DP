@@ -3,8 +3,13 @@
 #include <string.h>
 #include "./lcs.h"
 
+/* Backtrack through the filled DP matrix and accumulate the LCS output in result */
 void backtrack(dp_matrix_t* X, lcs_input_t* input, lcs_result_t* result, uint64_t i, uint64_t j);
 
+/* Iterates through the DP matrix in row-major order and updates each cell i, j
+ * with the length of the longest subsequence of the substrings 0...i of the first
+ * input and 0...j of the second input.. 
+ */ 
 void lcs_naive(dp_matrix_t* X, lcs_input_t* input) {
   uint64_t i, j;
   for (i = 0; i < X->width; i++) {
@@ -29,9 +34,10 @@ void lcs_naive(dp_matrix_t* X, lcs_input_t* input) {
   }
   printf("\n");
   free_lcs_result(result);
+  free(result);
 }
 
- void backtrack(dp_matrix_t* X, lcs_input_t* input, lcs_result_t* result, uint64_t i, uint64_t j) {
+void backtrack(dp_matrix_t* X, lcs_input_t* input, lcs_result_t* result, uint64_t i, uint64_t j) {
    if (i == -1 || j == -1) {
      return;
    }

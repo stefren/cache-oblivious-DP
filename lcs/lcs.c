@@ -3,16 +3,28 @@
 #include <string.h>
 #include <getopt.h>
 #include <assert.h>
-#include "../fasttime.h"
 #include "./lcs.h"
+
+#include "../fasttime.h"
 
 /*********************
  * Function prototypes
  *********************/
+/* Read in the input from the file described by filename, which has the format
+ * of x_len, y_len, x, y, separated by newlines.
+ * 
+ * Returns a lcs_input which is properly initialized with the lengths of the two
+ * inputs and pointers to char arrays with the inputs.
+ */
 static lcs_input_t* read_input(char* filename);
+
+/* Free the char arrays pointed to by the input structure and the structure itself. */
 void free_input(lcs_input_t* input);
 
+/* Helper function to print an error message */
 void print_error(char* msg);
+
+/* Function to print usage method of this binary */
 static void usage(void);
 
 /**************
@@ -44,20 +56,14 @@ int main(int argc, char** argv) {
     }
   }
 
+  // Read in input
   lcs_input_t* input = read_input(input_file);
-  // run implementations here
+
+  // Initialize empty matrix as input 
   dp_matrix_t* X = init(input->x_len, input->y_len);
   dp_matrix_t* Y = init(input->x_len, input->y_len);
-  for (uint64_t j = 0; j < input->y_len; j++) {
-    for (uint64_t i = 0; i < input->x_len; i++) {
-      if (input->x[i] == input->y[j]) {
-        set_entry(X, i, j, -1);
-        set_entry(Y, i, j, -1);
-      }
-    }
-  }
-  
-  
+
+
   fasttime_t start = gettime();
   lcs_cache_oblivious(X, input);
   fasttime_t end = gettime();
@@ -67,7 +73,7 @@ int main(int argc, char** argv) {
   lcs_naive(Y, input);
   end = gettime();
   printf("Regular impl.: %f\n", tdiff(start, end));
-
+  
   #ifndef NDEBUG
   for (uint64_t k = 0; k < input->x_len * input->y_len - 1; k++) { // the cache-oblivious solution
     assert(X->entries[k] == Y->entries[k]);                        // does not fill the last entry
