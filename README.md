@@ -8,7 +8,7 @@ Cache-oblivious algorithms can achieve asymptotically optimal bounds on the numb
 
 ## GEP Framework 
 
-This respository implements the Gaussian elimination paradigm as described in [Cache-Oblivious Dynamic Programming] (http://www.cs.utexas.edu/~vlr/papers/soda06.pdf) by Chowdhury and Ramachandran. This framework can be used for general O(n^3) dynamic programming algorithms that have updates of the form 
+This respository implements the Gaussian elimination paradigm as described in [Cache-Oblivious Dynamic Programming](http://www.cs.utexas.edu/~vlr/papers/soda06.pdf) by Chowdhury and Ramachandran. This framework can be used for general O(n^3) dynamic programming algorithms that have updates of the form 
 
 ```
  X[i][j] = f(X[i][j], X[i][k], X[k][j], X[k][k])
