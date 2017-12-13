@@ -14,7 +14,7 @@ This respository implements the Gaussian elimination paradigm as described in [C
  X[i][j] = f(X[i][j], X[i][k], X[k][j], X[k][k])
 ```
 
-In order to use this framework, you can implement the UPDATE_F and UPDATE_EXISTS_F functions as defined in `gep.c`. See `floyd_warshall/floyd_warshall_with_gep.c` as an example/.
+In order to use this framework, you can implement the UPDATE_F and UPDATE_EXISTS_F functions as defined in `gep.c`. See `floyd_warshall/floyd_warshall_with_gep.c` as an example.
 
 
 
